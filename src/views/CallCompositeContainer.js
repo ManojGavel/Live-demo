@@ -91,7 +91,7 @@ export const CallCompositeContainer = (props) => {
         })}
       >
         <Stack.Item grow>
-          <div style={{ height: '70vh', display: 'flex' }}>
+          
 
             <CallComposite
               adapter={adapter}
@@ -101,7 +101,7 @@ export const CallCompositeContainer = (props) => {
               formFactor={isMobileSession ? 'mobile' : 'desktop'}
               options={options}
             />
-          </div>
+          
         </Stack.Item>
 
       </Stack>
