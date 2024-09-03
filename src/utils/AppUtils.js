@@ -68,7 +68,7 @@ export const addUserToRoom = async (userId, roomId, role) => {
     },
     body: JSON.stringify({ userId: userId, roomId: roomId, role: role })
   };
-  const response = await  fetch(`${IP.localIP}/addUserToRoom`, requestOptions);
+  const response = await  fetch(`${IP.localIP}addUserToRoom`, requestOptions);
   if (!response.ok) {
     throw 'Unable to add user to room';
   }

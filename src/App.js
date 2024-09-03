@@ -19,9 +19,10 @@ import { fromFlatCommunicationIdentifier } from "@azure/communication-react";
 import {  Spinner } from '@fluentui/react';
 import { CallError } from "./views/CallError";
 import { CallScreen } from "./views/CallScreen";
-
+import { initializeIcons } from '@fluentui/react';
 
 export default function App() {
+  initializeIcons();
   const [page, setPage] = useState("home");
 
   //User credentials to join the call with - these are retrieved from the server

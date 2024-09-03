@@ -82,28 +82,30 @@ export const CallCompositeContainer = (props) => {
   }
 
   return (
-    <Stack
-    tokens={{ childrenGap: '1rem' }}
-    className={mergeStyles({
-      margin: '2rem'
-    })}
-  >
-    <Stack.Item grow>
-      <div style={{ height: '70vh', display: 'flex' }}>
+    <>
+      <RecordingList serverCallId={serverCallId} />
+      <Stack
+        tokens={{ childrenGap: '1rem' }}
+        className={mergeStyles({
+          margin: '2rem'
+        })}
+      >
+        <Stack.Item grow>
+          <div style={{ height: '70vh', display: 'flex' }}>
 
-        <CallComposite
-          adapter={adapter}
-          fluentTheme={currentTheme.theme}
-          rtl={currentRtl}
-          callInvitationUrl={callInvitationUrl}
-          formFactor={isMobileSession ? 'mobile' : 'desktop'}
-          options={options}
-        />
-      </div>
-    </Stack.Item>
-    <RecordingList serverCallId={serverCallId} />
+            <CallComposite
+              adapter={adapter}
+              fluentTheme={currentTheme.theme}
+              rtl={currentRtl}
+              callInvitationUrl={callInvitationUrl}
+              formFactor={isMobileSession ? 'mobile' : 'desktop'}
+              options={options}
+            />
+          </div>
+        </Stack.Item>
 
-    </Stack>
+      </Stack>
+    </>
   );
 };
 
