@@ -89,7 +89,7 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      if (callLocator && 'roomId' in callLocator) {
+      if (callLocator && 'roomId' in callLocator && userId) {
         console.log(userId, '<------userId')
         if (userId && 'communicationUserId' in userId) {
           await addUserToRoom(
@@ -97,7 +97,17 @@ export default function App() {
             callLocator.roomId,
             'Presenter'
           );
+        } else {
+          throw 'Invalid userId!';
         }
+      }
+      const joiningExistingCall = !!getRoomIdFromUrl();
+      if (callLocator && !joiningExistingCall) {
+        window.history.pushState(
+          {},
+          document.title,
+          window.location.origin + getJoinParams(callLocator)
+        );
       }
     })();
   }, [callLocator]);
