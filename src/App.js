@@ -8,6 +8,7 @@ import {
   getMeetingIdFromUrl,
   getRoomIdFromUrl,
   getTeamsLinkFromUrl,
+  getUserNameAndRole,
   isLandscape,
   isOnIphoneAndNotSafari,
   navigateToHomePage,
@@ -33,7 +34,7 @@ export default function App() {
   //Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState();
   const [targetCallees, setTargetCallees] = useState(undefined);
-  const [displayName, setDisplayName] = useState("Manoj"); //! Manoj is the default name
+  const [displayName, setDisplayName] = useState("Manoj"); //! Teams UserName PlaceHolder is the default name
 
   const [isTeamsCall, setIsTeamsCall] = useState(false);
 
@@ -83,6 +84,21 @@ export default function App() {
       //     throw 'Invalid userId!';
       //   }
       // }
+      let userNameAndRole = getUserNameAndRole();
+      if(userNameAndRole.userName){
+        setDisplayName(userNameAndRole.userName);
+      }
+      if(userNameAndRole.role){
+        callLocator = {
+          roomId: roomId,
+        };
+        await addUserToRoom(
+          userId.communicationUserId,
+          callLocator.roomId,
+          userNameAndRole.role
+        );
+      }
+
       setCallLocator(callLocator);
     })();
   }, []);
@@ -108,6 +124,8 @@ export default function App() {
           document.title,
           window.location.origin + getJoinParams(callLocator)
         );
+      } else {
+        getRoomIdFromUrl()
       }
     })();
   }, [callLocator]);

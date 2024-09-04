@@ -84,28 +84,39 @@ export const CallCompositeContainer = (props) => {
 
   return (
     <>
-      <RecordingList serverCallId={serverCallId} />
-      <Stack
+      {/* <RecordingList serverCallId={serverCallId} /> */}
+      {/* <Stack
         tokens={{ childrenGap: '1rem' }}
         className={mergeStyles({
           margin: '2rem'
         })}
       >
-        <Stack.Item grow>
+        <Stack.Item grow> */}
           
 
             <CallComposite
               adapter={adapter}
               fluentTheme={darkTheme}
               rtl={currentRtl}
+              onFetchParticipantMenuItems={async (participant) => {
+                return [
+                  {
+                    key: 'mute',
+                    text: participant.isMuted ? 'Unmute' : 'Mute',
+                    onClick: () => {
+                      participant.isMuted ? participant.unmute() : participant.mute();
+                    }
+                  }
+                ];
+              }}
               callInvitationUrl={callInvitationUrl}
               formFactor={isMobileSession ? 'mobile' : 'desktop'}
               options={options}
             />
           
-        </Stack.Item>
+        {/* </Stack.Item>
 
-      </Stack>
+      </Stack> */}
     </>
   );
 };

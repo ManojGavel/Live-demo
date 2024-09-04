@@ -110,6 +110,19 @@ export const getRoomIdFromUrl = ()=> {
   return roomId ? { roomId } : undefined;
 };
 
+export const findHostFromUrl = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('host');
+};
+
+export const getUserNameAndRole =()=> {
+  const urlParams = new URLSearchParams(window.location.search);
+  const userName = urlParams.get('userName');
+  console.log(userName, '<------username')  
+  const role = urlParams.get('role');
+  return { userName, role };
+};
+
 /*
  * TODO:
  *  Remove this method once the SDK improves error handling for unsupported browser.

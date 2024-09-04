@@ -74,15 +74,15 @@ export const CallScreen = (props) => {
     );
   }, [token, userId, isTeamsIdentityCall]);
 
-  if (isTeamsIdentityCall) {
-    return (
-      <TeamsCallScreen
-        afterCreate={afterTeamsCallAdapterCreate}
-        credential={credential}
-        {...props}
-      />
-    );
-  }
+  // if (isTeamsIdentityCall) {
+  //   return (
+  //     <TeamsCallScreen
+  //       afterCreate={afterTeamsCallAdapterCreate}
+  //       credential={credential}
+  //       {...props}
+  //     />
+  //   );
+  // }
   if (props.callLocator) {
     return (
       <AzureCommunicationCallScreen
@@ -91,15 +91,16 @@ export const CallScreen = (props) => {
         {...props}
       />
     );
-  } else {
-    return (
-      <AzureCommunicationOutboundCallScreen
-        afterCreate={afterCallAdapterCreate}
-        credential={credential}
-        {...props}
-      />
-    );
   }
+  //  else {
+  //   return (
+  //     <AzureCommunicationOutboundCallScreen
+  //       afterCreate={afterCallAdapterCreate}
+  //       credential={credential}
+  //       {...props}
+  //     />
+  //   );
+  // }
 };
 
 const TeamsCallScreen = (props) => {
