@@ -16,14 +16,14 @@ import {
 import { useIsMobile } from "./utils/useInMobile";
 import { HomeScreen } from "./views/HomeScreen";
 import { fromFlatCommunicationIdentifier } from "@azure/communication-react";
-import {  Spinner } from '@fluentui/react';
+import { Spinner } from '@fluentui/react';
 import { CallError } from "./views/CallError";
 import { CallScreen } from "./views/CallScreen";
 import { initializeIcons } from '@fluentui/react';
 
 export default function App() {
   initializeIcons();
-  const [page, setPage] = useState("home");
+  const [page, setPage] = useState("call"); //* Changes default (Home) page to call
 
   //User credentials to join the call with - these are retrieved from the server
   const [token, setToken] = useState("");
@@ -33,7 +33,7 @@ export default function App() {
   //Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState();
   const [targetCallees, setTargetCallees] = useState(undefined);
-  const [displayName, setDisplayName] = useState("");
+  const [displayName, setDisplayName] = useState("Manoj"); //! Manoj is the default name
 
   const [isTeamsCall, setIsTeamsCall] = useState(false);
 
@@ -43,13 +43,64 @@ export default function App() {
       try {
         const { token, user } = await fetchTokenResponse();
         setToken(token);
-        setUserId(user);
+        setUserId(() => user);
       } catch (e) {
         console.error(e);
         setUserCredentialFetchError(true);
       }
     })();
+
+    // displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
+    // callLocator: callLocator,
+    // option: chosenCallOption.key,
+    // role: chosenRoomsRoleOption.key,
+    // teamsToken,
+    // teamsId,
+    // outboundTeamsUsers: teamsParticipantsToCall
+
+
+    let callLocator
+    (async () => {
+      let roomId = '';
+      try {
+        roomId = await createRoom();
+      } catch (e) {
+        console.log(e);
+      }
+
+      callLocator = {
+        roomId: roomId,
+      };
+
+      // if (callLocator && 'roomId' in callLocator && userId && 'communicationUserId' in userId) {
+      //   if (userId && 'communicationUserId' in userId) {
+      //     await addUserToRoom(
+      //       userId.communicationUserId,
+      //       callLocator.roomId,
+      //       'Presenter'
+      //     );
+      //   } else {
+      //     throw 'Invalid userId!';
+      //   }
+      // }
+      setCallLocator(callLocator);
+    })();
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (callLocator && 'roomId' in callLocator) {
+        console.log(userId, '<------userId')
+        if (userId && 'communicationUserId' in userId) {
+          await addUserToRoom(
+            userId.communicationUserId,
+            callLocator.roomId,
+            'Presenter'
+          );
+        }
+      }
+    })();
+  }, [callLocator]);
 
   const isMobileSession = useIsMobile();
   const isLandscapeSession = isLandscape();
@@ -133,6 +184,8 @@ export default function App() {
               }
             }
 
+
+
             setCallLocator(callLocator);
 
             // Update window URL to have a joinable link
@@ -168,6 +221,7 @@ export default function App() {
 
       if (!token || !userId || (!displayName && !isTeamsCall) || (!targetCallees && !callLocator)) {
         document.title = `credentials - ${WEB_APP_TITLE}`;
+        console.log(token, userId, displayName, targetCallees, callLocator, '<------token, userId, displayName, targetCallees, callLocator')
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (

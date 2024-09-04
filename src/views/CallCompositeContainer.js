@@ -12,6 +12,7 @@ import { recordingButtonPropsCallback } from './RecordingButton';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { v1 } from 'uuid'
 import { RecordingList } from './RecordingList';
+import { FluentThemeProvider, lightTheme, darkTheme } from '@azure/communication-react';
 
 export const CallCompositeContainer = (props) => {
 
@@ -95,7 +96,7 @@ export const CallCompositeContainer = (props) => {
 
             <CallComposite
               adapter={adapter}
-              fluentTheme={currentTheme.theme}
+              fluentTheme={darkTheme}
               rtl={currentRtl}
               callInvitationUrl={callInvitationUrl}
               formFactor={isMobileSession ? 'mobile' : 'desktop'}

@@ -4,6 +4,7 @@
 import React from 'react';
 import { ChoiceGroup, IChoiceGroupOption, concatStyleSets } from '@fluentui/react';
 import { useSwitchableFluentTheme } from './SwitchableFluentThemeProvider';
+import { FluentThemeProvider, lightTheme, darkTheme } from '@azure/communication-react';
 
 /**
  * Props for ThemeSelector component
@@ -26,7 +27,10 @@ export const ThemeSelector = (props) => {
     if (option) {
       const themeName = option.key.toString();
       const theme = themeStore[themeName];
-      setCurrentTheme(theme);
+      setCurrentTheme( {
+        name: 'Dark',
+        theme: darkTheme
+      });
     }
   };
 

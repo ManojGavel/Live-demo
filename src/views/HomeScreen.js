@@ -215,7 +215,7 @@ export const HomeScreen = (props) => {
                 defaultSelectedKey="Presenter"
                 options={roomRoleOptions}
                 required={true}
-                onChange={(_, option) => option && setRoomsRoleOption(option)}
+                onChange={(_, option) => {option && setRoomsRoleOption(option); console.log(option)}}
               />
             )}
             {teamsAdhocChosen && (

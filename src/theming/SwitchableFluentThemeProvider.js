@@ -32,7 +32,7 @@ const defaultThemes = {
  */
 
 
-const defaultTheme = defaultThemes.Light;
+const defaultTheme = defaultThemes.Dark;
 
 /**
  * React useContext for FluentTheme state of SwitchableFluentThemeProvider
